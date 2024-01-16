@@ -1,3 +1,4 @@
+import numpy as np
 #!/usr/bin/env python3
 '''This function transposes matrixes'''
 
