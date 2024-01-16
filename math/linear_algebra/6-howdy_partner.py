@@ -6,5 +6,4 @@ def cat_arrays(arr1, arr2):
     '''This function concatenates two arrays'''
     if len(arr1) == len(arr2):
         return arr1 + arr2
-    else:
-        return None
+
