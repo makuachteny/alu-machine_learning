@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 '''
-   This module that calculates the derivative of a polynomial
+    This module calculates the derivative of a polynomial
 '''
 
 
