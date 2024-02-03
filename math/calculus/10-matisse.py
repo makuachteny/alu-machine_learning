@@ -9,5 +9,5 @@ def poly_derivative(poly):
         calculates the derivative of  polynomials
     '''
     if not isinstance(poly, list) or len(poly) <= 1:
-        return [None]
+        return [0]
     return [poly[i] * i for i in range(1, len(poly))]
