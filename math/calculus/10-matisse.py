@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 '''
-    This module calculates the derivative of a polynomial
+    a function def poly_derivative(poly):
+    that calculates the derivative of a polynomial
 '''
 
 
 def poly_derivative(poly):
     '''
-        calculates the derivative of  polynomials
+        calculates the derivative of a polynomial
     '''
     if not isinstance(poly, list) or len(poly) <= 1:
         return [0]
