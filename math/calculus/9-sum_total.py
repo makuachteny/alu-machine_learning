@@ -1,16 +1,18 @@
-def get_derivative(func, x):
-    """Compute the derivative of `func` at the location `x`."""
-    h = 0.0001                          # step size
-    return (func(x+h) - func(x)) / h    # rise-over-run
+#!/usr/bin/env python3
+''' This module calculates the total sum of a summation'''
 
 
-def f(x): return x**2                   # some test function f(x)=x^2
+def summation_i_squared(n):
+    '''This function calculates the total sum of a summation'''
+    # Check if n is valid number
+    if not isinstance(n, int) or n < 1:
+        return None
+    elif n == 1:
+        return 1
+    else:
+        return n**2 + summation_i_squared(n - 1)
 
 
-x = 3                                   # the location of interest
-computed = get_derivative(f, x)
-actual = 2*x
-
-computed, actual   # = 6.0001, 6        # pretty close if you ask me...
-
-print ('computed:', computed, 'actual:', actual)
+# Example usage:
+result = summation_i_squared(5)
+print(result)
