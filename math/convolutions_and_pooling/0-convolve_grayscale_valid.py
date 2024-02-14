@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-''' This module contains a function for valid convolution on grayscale images '''
+''' This module performs valid convolution on grayscale images '''
 
 
 import numpy as np
 
 
 def convolve_grayscale_valid(images, kernel):
+    ''' This function performs valid convolution on grayscale images'''
     m, h, w = images.shape
     kh, kw = kernel.shape
 
