@@ -25,11 +25,12 @@ def convolve_grayscale_padding(images, kernel, padding):
     # calculate the output height and width of the convolved image
     convolved_images = np.zeros(((m, padded_h, padded_w)))
 
-    # Perform convolution on each pixel
-    for i in range(padded_h):
-        for j in range(padded_w):
-            convolved_images[:, i, j] = np.sum(
-                padded_images[:, i:i+kh, j:j+kw] * kernel, axis=(1, 2)
-            )
+# Perform convolution on each pixel
+    for i in range(padded_h - kh + 1):
+        for j in range(padded_w - kw + 1):
+            # Extract the region of interest (ROI) from the padded images
+            roi = padded_images[:, i:i+kh, j:j+kw]
+            # Apply convolution by element-wise multiplication and summation
+            convolved_images[:, i, j] = np.sum(roi * kernel, axis=(1, 2))
 
     return convolved_images
