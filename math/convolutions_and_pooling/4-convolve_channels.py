@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 ''' This module performs convolution on images with multiple channels '''
 
-
 import numpy as np
 
 
 def convolve_channels(images, kernel, padding='same', stride=(1, 1)):
-    ''' Performs convolutions on images chanels '''
+    ''' Performs convolutions on images channels '''
 
     m, h, w, c = images.shape
     kh, kw, cc = kernel.shape
