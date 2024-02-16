@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-''' This module performs
-    convolution on grayscale images 
+''' This module performsn convolution on grayscale images 
 '''
 
 import numpy as np
 
 
 def convolve_grayscale(images, kernel, padding='same', stride=(1, 1)):
+    ''' Function covolves images '''
 
     m, h, w = images.shape
     kh, kw = kernel.shape
@@ -33,7 +33,7 @@ def convolve_grayscale(images, kernel, padding='same', stride=(1, 1)):
 
     # calculate the convolved images
     convolved_images = np.zeros((m, ch, cw))
-    
+
     # Perform convolution on each pixel
     for i in range(ch):
         for j in range(cw):
