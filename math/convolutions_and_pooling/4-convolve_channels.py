@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 ''' This module performs convolution on images with multiple channels '''
 
+
 import numpy as np
 
 
@@ -26,8 +27,8 @@ def convolve_channels(images, kernel, padding='same', stride=(1, 1)):
 
     # Calculate output dimensions
     if padding == 'valid':
-        ch = (h - kh) // sh + 1
-        cw = (w - kw) // sw + 1
+        ch = (h - kh + 2 * ph) // sh + 1
+        cw = (w - kw + 2 * pw) // sw + 1
     else:
         ch = (h + 2 * ph - kh) // sh + 1
         cw = (w + 2 * pw - kw) // sw + 1
