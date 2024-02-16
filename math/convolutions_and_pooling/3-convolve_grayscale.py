@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-''' This module performsn convolution on grayscale images 
-'''
+''' This module performsn convolution on grayscale images'''
 
 import numpy as np
 
