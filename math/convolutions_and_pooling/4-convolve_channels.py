@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 ''' This module performs convolution on images with multiple channels '''
 
-
 import numpy as np
 
 
