@@ -6,7 +6,7 @@ import numpy as np
 
 
 def convolve_channels(images, kernel, padding='same', stride=(1, 1)):
-    ''' Performs a convolution on images with multiple channels using given padding and stride '''
+    ''' Performs convolutions on images chanels '''
 
     m, h, w, c = images.shape
     kh, kw, cc = kernel.shape
@@ -36,7 +36,8 @@ def convolve_channels(images, kernel, padding='same', stride=(1, 1)):
     for i in range(ch):
         for j in range(cw):
             convolved_images[:, i, j] = np.sum(
-                padded_images[:, i*sh:i*sh+kh, j*sw:j*sw+kw, :] * kernel, axis=(1, 2, 3)
+                padded_images[:, i*sh:i*sh+kh, j*sw:j*sw+kw, :] * kernel, 
+                axis=(1, 2, 3)
             )
 
     return convolved_images
