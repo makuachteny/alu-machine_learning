@@ -25,7 +25,8 @@ def convolve(images, kernels, padding='same', stride=(1, 1)):
     ch = (h + 2 * ph - kh) // sh + 1
     cw = (w + 2 * pw - kw) // sw + 1
 
-    convolved_images = np.zeros((m, ch, cw, nc))
+    convolved_images = np.zeros(
+        (m, (h - kh + 2 * ph) // sh + 1, (w - kw + 2 * pw) // sw + 1, nc))
 
     for i in range(ch):
         for j in range(cw):
