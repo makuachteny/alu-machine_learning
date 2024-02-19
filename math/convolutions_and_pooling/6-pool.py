@@ -14,10 +14,8 @@ def pool(images, kernel_shape, stride, mode='max'):
     # Calculate output dimensions
     oh = (h - kh) // sh + 1
     ow = (w - kw) // sw + 1
-
     # Initialize pooled images array
     pooled_images = np.zeros((m, oh, ow, c))
-
     # Perform pooling
     for i in range(oh):
         for j in range(ow):
