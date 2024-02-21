@@ -32,4 +32,3 @@ def convolve(images, kernels, padding='same', stride=(1, 1)):
                 convoluted[:, i, j, index] = output
 
     return convoluted
-
