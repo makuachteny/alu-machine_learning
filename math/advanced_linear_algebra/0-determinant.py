@@ -17,8 +17,8 @@ def determinant(matrix):
         return 1
 
     # Check if matrix is square
-    if len(matrix) != len(matrix[0]):
-        raise ValueError("matrix must be a square matrix")
+    if not all(len(row) == len(matrix) for row in matrix):
+        raise ValueError('matrix must be a square matrix')
 
     # Calculate the determinant of the matrix
     if len(matrix) == 1:
