@@ -14,7 +14,7 @@ def determinant(matrix):
 
     # Check if the matrix is a 0x0 matrix
     if len(matrix) == 0:
-        return 1
+        return 0
 
     # Check if matrix is square
     if not all(len(row) == len(matrix) for row in matrix):
