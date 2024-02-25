@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 '''
 This module contains a function.
 It calculates the determinant of a square matrix.
