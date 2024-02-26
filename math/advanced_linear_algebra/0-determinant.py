@@ -8,13 +8,16 @@ def determinant(matrix):
     '''This function calculates the determinant of a matrix.'''
 
     # Check if the matrix is a list of lists
-    if not isinstance(matrix, list) or not all(isinstance(row, list)
-                                               for row in matrix):
-        raise TypeError('matrix must be a list of lists')
+    if not all(isinstance(row, list) for row in matrix):
+        raise TypeError('Matrix must be a list of lists')
 
     # Check if the matrix is a 0x0 matrix
-    if len(matrix) == 0:
-        return 0
+    if len(matrix) == 0 or not isinstance(matix, list):
+        raise TypeError('Matrix must be a non-empty list of lists')
+    
+    # Checks if the matrix is 1x1 with no elements
+    if matrix == [[]]:
+        return 1
 
     # Check if matrix is square
     if not all(len(row) == len(matrix) for row in matrix):
