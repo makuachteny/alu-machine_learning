@@ -1,38 +1,49 @@
 #!/usr/bin/env python3
-'''This module calculates the minor of a matrix'''
+""" advanced linear algebra"""
 
 
-def cofactor(matrix):
-    # Check if matrix is a list of lists
-    if not isinstance(matrix, list) or not all(isinstance(row, list) for row in matrix):
-        raise TypeError("matrix must be a list of lists")
+def determinant(matrix):
+    """ determerminant"""
+    if len(matrix) == 1:
+        return matrix[0][0]
+    if len(matrix) == 2:
+        determ = ((matrix[0][0] * matrix[1][1])
+                  - (matrix[0][1] * matrix[1][0]))
+        return determ
 
-    # Check if matrix is square and non-empty
-    num_rows = len(matrix)
-    if num_rows == 0 or any(len(row) != num_rows for row in matrix):
-        raise ValueError("matrix must be a non-empty square matrix")
+    determ = 0
+    for i, j in enumerate(matrix[0]):
+        row = [r for r in matrix[1:]]
+        temp = []
+        for r in row:
+            a = []
+            for c in range(len(matrix)):
+                if c != i:
+                    a.append(r[c])
+            temp.append(a)
+        determ += j * (-1) ** i * determinant(temp)
+    return determ
 
-    # Calculate cofactor matrix
-    def minor(m, i, j):
-        return [row[:j] + row[j + 1:] for row in (m[:i] + m[i + 1:])]
 
-    def determinant(m):
-        if len(m) == 1:
-            return m[0][0]
-        elif len(m) == 2:
-            return m[0][0] * m[1][1] - m[0][1] * m[1][0]
-        else:
-            det = 0
-            for j in range(len(m)):
-                det += ((-1) ** j) * m[0][j] * determinant(minor(m, 0, j))
-            return det
+def minor(matrix):
+    """ minor of matrix """
+    if not isinstance(matrix, list) or matrix == []:
+        raise TypeError('matrix must be a list of lists')
+    if any(not isinstance(row, list) for row in matrix):
+        raise TypeError('matrix must be a list of lists')
+    if any(len(row) != len(matrix) for row in matrix):
+        raise ValueError('matrix must be a non-empty square matrix')
 
-    cofactor_matrix = []
-    for i in range(num_rows):
-        cofactor_row = []
-        for j in range(num_rows):
-            minor_matrix = minor(matrix, i, j)
-            cofactor_row.append(((-1) ** (i + j)) * determinant(minor_matrix))
-        cofactor_matrix.append(cofactor_row)
+    if len(matrix) == 1:
+        return [[1]]
 
-    return cofactor_matrix
+    min = []
+    for x in range(len(matrix)):
+        t = []
+        for y in range(len(matrix[0])):
+            s = []
+            for row in (matrix[:x] + matrix[x + 1:]):
+                s.append(row[:y] + row[y + 1:])
+            t.append(determinant(s))
+        min.append(t)
+    return min
