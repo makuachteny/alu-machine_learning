@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" advanced linear algebra"""
+""" This module calculates minor of a matrix """
 
 
 def determinant(matrix):
