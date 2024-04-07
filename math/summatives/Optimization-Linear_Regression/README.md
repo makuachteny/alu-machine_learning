@@ -116,6 +116,6 @@ m_gd, b_gd = gradient_descent(dEdm, dEdb, m_initial, b_initial, X_norm, Y_norm, 
 Fast API endpoint:
 To integrate the linear regression model with FastAPI for predictions, follow the provided code snippet:
 
-Here is a [link to my Swagger UI](https://www.example.com/swagger).
+Here is a [link to my Swagger UI](https://7c85-105-160-57-187.ngrok-free.app/docs).
 
 Here is a [link to my Video demonstrating how my API is working()]
