@@ -7,6 +7,6 @@ To integrate the linear regression model with FastAPI for predictions, follow th
 
 `Run the cells in notebook. A url will be generated, then click on the url to direct you to the FastApi port server running the application`
 
-Here is a [link to my Swagger UI](https://b156-154-70-52-9.ngrok-free.app).
+Here is a [link to my Swagger UI](https://b156-154-70-52-9.ngrok-free.app/docs).
 
 Here is a [link to my Video demonstrating how my API is working(https://www.loom.com/share/7975dadf62e14ff888086996c9dbb17b?t=111&sid=dfdb6245-2ed5-4b34-aa10-ab48593abf9c)]
