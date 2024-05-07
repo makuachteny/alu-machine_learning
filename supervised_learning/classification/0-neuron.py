@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-""" Neuron class tjat defines a single neuron performing binary classification """
+""" Neuron performing binary classification """
 
 import numpy as np
+
 
 class Neuron:
     """ Neuron class that defines a single neuron"""
