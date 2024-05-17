@@ -1,30 +1,47 @@
 #!/usr/bin/env python3
-"""Neuron class that defines a single neuron performing binary classification. (Based on 0-neuron.py)"""
+"""Class Neuron that defines a single neuron performing binary classification
+"""
+
 
 import numpy as np
 
+
 class Neuron:
-    """ Neuron class that defines a single neuron performing binary classification """
+    """ Class Neuron
+    """
+
     def __init__(self, nx):
-        if type(nx) is not int:
-            raise TypeError("nx must be an integer")
+        """ Instantiation function of the neuron
+
+        Args:
+            nx (_type_): _description_
+
+        Raises:
+            TypeError: _description_
+            ValueError: _description_
+        """
+        if not isinstance(nx, int):
+            raise TypeError('nx must be an integer')
         if nx < 1:
-            raise ValueError("nx must be a positive integer")
-        self.__W = np.random.randn(1, nx)
+            raise ValueError('nx must be a positive')
+
+        # initialize private instance attributes
+        self.__W = np.random.normal(size=(1, nx))
         self.__b = 0
         self.__A = 0
 
+        # getter function
     @property
-    def get_W(self):
-        """ Getter method for W(Weight) """
+    def W(self):
+        """Return weights"""
         return self.__W
 
     @property
-    def get_b(self):
-        """ Getter method for b(Bias) """
+    def b(self):
+        """Return bias"""
         return self.__b
 
     @property
-    def get_A(self):
-        """ Getter method for A(Activation) """
+    def A(self):
+        """Return output"""
         return self.__A
