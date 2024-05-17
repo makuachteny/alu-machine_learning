@@ -28,22 +28,38 @@ class DeepNeuralNetwork:
         if len(layers) < 1:
             raise TypeError('layers must be a list of positive integers')
 
-        self.L = len(layers)
-        self.cache = {}
-        self.weights = {}
+        self.__L = len(layers)
+        self.__cache = {}
+        self.__weights = {}
 
-        for i in range(self.L):
+        for i in range(self.__L):
             if not isinstance(layers[i], int) or layers[i] < 1:
                 raise TypeError('layers must be a list of positive integers')
 
             if i == 0:
                 # He et al. initialization
-                self.weights['W' + str(i + 1)] = np.random.randn(
+                self.__weights['W' + str(i + 1)] = np.random.randn(
                     layers[i], nx) * np.sqrt(2 / nx)
             else:
                 # He et al. initialization
-                self.weights['W' + str(i + 1)] = np.random.randn(
+                self.__weights['W' + str(i + 1)] = np.random.randn(
                     layers[i], layers[i - 1]) * np.sqrt(2 / layers[i - 1])
 
             # Zero initialization
-            self.weights['b' + str(i + 1)] = np.zeros((layers[i], 1))
+            self.__weights['b' + str(i + 1)] = np.zeros((layers[i], 1))
+
+    # add getter method
+    @property
+    def L(self):
+        """ Return layers in the neural network"""
+        return self.__L
+
+    @property
+    def cache(self):
+        """ Return dictionary with intermediate values of the network"""
+        return self.__cache
+
+    @property
+    def weights(self):
+        """Return weights and bias dictionary"""
+        return self.__weights
