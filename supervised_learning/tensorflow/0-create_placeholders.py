@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
-""" Module defines a function that returns two placeholders, x and y, for neural network:
-    nx: the number of input features to the neuron
-    classes: the number of classes in our classifier
+""" Module defines a function that returns two placeholders x and y
 """
 
 import tensorflow as tf
