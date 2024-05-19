@@ -12,6 +12,6 @@ def create_placeholders(nx, classes):
         nx: the number of input features to the neuron
         classes: the number of classes in our classifier
     """
-    x = tf.keras.Input(shape=(nx,), name="x")
-    y = tf.keras.Input(shape=(classes,), name="y")
+    x = tf.placeholder(tf.float32, shape=[None, nx], name='x')
+    y = tf.placeholder(tf.float32, shape=[None, classes], name='y')
     return x, y
