@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" Module contains a function that calculates the cost of a neural network with L2 regularization """
+""" L2 Regularization Cost"""
 
 
 import numpy as np
@@ -7,7 +7,7 @@ import numpy as np
 
 def l2_reg_cost(cost, lambtha, weights, L, m):
     """ function calculates the cost of a neural network with L2.
-    Parameters: 
+    Parameters:
     cost: the cost of the network without L2 regularization.
     lambtha: the regularization parameter.
     weights: a dictionary of the weights and biases of the neural network.
@@ -17,7 +17,7 @@ def l2_reg_cost(cost, lambtha, weights, L, m):
     """
     # Initialize the L2 regularization term to zero
     l2_reg = 0
-    # Loop through the layers to accumulate the L2 regularization term    
+    # Loop through the layers to accumulate the L2 regularization term
     for i in range(1, L+1):
         # Get the weight matrix for layer i
         w = weights['W' + str(i)]
@@ -25,9 +25,9 @@ def l2_reg_cost(cost, lambtha, weights, L, m):
         # Compute the sum of the squares of the weights for layer i
         reg_weights = np.sum(w ** 2)
 
-        # Accumulate the regulatization term, scaled by lambda / (2 * m)       
+        # Accumulate the regulatization term, scaled by lambda / (2 * m)
         l2_reg += reg_weights * (lambtha / (2 * m))
 
     cost += l2_reg
-    
+
     return cost
