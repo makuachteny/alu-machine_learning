@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """ L2 Regularization Gradient Descent
 """
-
-
 import numpy as np
 
 
@@ -23,33 +21,28 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
     """
     m = Y.shape[1]  # Number of data points
 
-    # Calculate the gradient of the cost with respect to the output of the last layer
-    A_L = cache['A' + str(L)]
-    dZ_L = A_L - Y  # Derivative of the loss with respect to A_L
-    dW_L = (1 / m) * np.dot(dZ_L,
-                            cache['A' + str(L - 1)].T) + (lambtha / m) * weights['W' + str(L)]
-    db_L = (1 / m) * np.sum(dZ_L, axis=1, keepdims=True)
+    # Loop through each layer of the neural network and update the weights and biases
+    for i in range(L, 0, -1):
+        # Retrieve the activations and parameters for the current layer
+        A = cache["A" + str(i)]
+        A_prev = cache["A" + str(i - 1)]
+        W = weights["W" + str(i)]
+        b = weights["b" + str(i)]
 
-    # Update the weights and biases of the last layer
-    weights['W' + str(L)] -= alpha * dW_L
-    weights['b' + str(L)] -= alpha * db_L
+        # Compute the error term for the output layer
+        if i == L:
+            dz = A - Y
+        else:
+            # Compute the error term for the hidden layers
+            dz = dA * (A * (1 - A))
 
-    # Backpropagate through the layers
-    dZ_curr = dZ_L
-    for l in range(L - 1, 0, -1):
-        A_curr = cache['A' + str(l)]
-        A_prev = cache['A' + str(l - 1)]
+        # Compute the gradients for the weights and biases
+        db = dz.mean(axis=1, keepdims=True)
+        dw = np.matmul(dz, A_prev.T) / m
+        da = np.matmul(W.T, dz)
 
-        # Calculate gradients
-        # Derivative of the tanh activation
-        dZ_curr = np.dot(weights['W' + str(l + 1)].T,
-                         dZ_curr) * (1 - A_curr ** 2)
-        dW_curr = (1 / m) * np.dot(dZ_curr, A_prev.T) + \
-            (lambtha / m) * weights['W' + str(l)]
-        db_curr = (1 / m) * np.sum(dZ_curr, axis=1, keepdims=True)
+        # Update the weights and biases
+        weights["W" + str(i)] -= alpha * dw
+        weights["b" + str(i)] -= alpha * db
 
-        # Update weights and biases
-        weights['W' + str(l)] -= alpha * dW_curr
-        weights['b' + str(l)] -= alpha * db_curr
-
-    return None
+    return weights
