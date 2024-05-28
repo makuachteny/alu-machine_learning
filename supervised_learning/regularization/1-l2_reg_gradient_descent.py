@@ -1,28 +1,26 @@
 #!/usr/bin/env python3
-""" L2 Regularization Gradient Descent
-"""
+
+"""this module has a function that calculates
+cost of  a neural entwork with L2 regularization"""
+
 import numpy as np
 
 
 def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
-    """
-    Updates the weights and biases of a neural network using gradient descent with L2 regularization.
+    """updates weights and biases of a NN using gradient descent
+    Y - one-hot of shape (classes, m) has
+    labels for data
+        classes - no. of classes
+        m - no. of data points
+    weights - dict of weights & biases of a NN
+    cache - dict of outputs of each layer of NN
+    alpha - learning rate
+    lambtha - L2 regularization param
+    L - no. of layers of the network
+    NN uses tanh activations but last layer uses softmax"""
 
-    Parameters:
-    Y (numpy.ndarray): One-hot numpy.ndarray of shape (classes, m) that contains the correct labels for the data.
-    weights (dict): A dictionary of the weights and biases of the neural network.
-    cache (dict): A dictionary of the outputs of each layer of the neural network.
-    alpha (float): The learning rate.
-    lambtha (float): The L2 regularization parameter.
-    L (int): The number of layers of the network.
-
-    Returns:
-    None: The weights and biases are updated in place.
-    """
-
-
-m = Y.shape[1]
-   for i in range(L, 0, -1):
+    m = Y.shape[1]
+    for i in range(L, 0, -1):
         A = cache['A' + str(i)]
         A_prev = cache['A' + str(i - 1)]
         W = weights['W' + str(i)]
