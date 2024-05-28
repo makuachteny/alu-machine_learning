@@ -19,30 +19,21 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
     Returns:
     None: The weights and biases are updated in place.
     """
-    m = Y.shape[1]  # Number of data points
 
-    # Loop through each layer of the neural network and update the weights and biases
-    for i in range(L, 0, -1):
-        # Retrieve the activations and parameters for the current layer
-        A = cache["A" + str(i)]
-        A_prev = cache["A" + str(i - 1)]
-        W = weights["W" + str(i)]
-        b = weights["b" + str(i)]
 
-        # Compute the error term for the output layer
+m = Y.shape[1]
+   for i in range(L, 0, -1):
+        A = cache['A' + str(i)]
+        A_prev = cache['A' + str(i - 1)]
+        W = weights['W' + str(i)]
+        b = weights['b' + str(i)]
         if i == L:
             dZ = A - Y
         else:
-            # Compute the error term for the hidden layers
-            dZ = dA * (A * (1 - A))
-
-        # Compute the gradients for the weights and biases
-        db = dZ.mean(axis=1, keepdims=True)
-        dW = np.matmul(dZ, A_prev.T) / m
+            dZ = dA * (1 - (A ** 2))
+        dW = (1 / m) * np.matmul(dZ, A_prev.T) + ((lambtha / m) * W)
+        db = (1 / m) * np.sum(dZ, axis=1, keepdims=True)
         dA = np.matmul(W.T, dZ)
-
-        # Update the weights and biases
-        weights["W" + str(i)] -= alpha * dW
-        weights["b" + str(i)] -= alpha * db
-
+        weights['W' + str(i)] = W - (alpha * dW)
+        weights['b' + str(i)] = b - (alpha * db)
     return weights
