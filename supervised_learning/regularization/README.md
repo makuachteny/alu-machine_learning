@@ -1,3 +1,4 @@
+## Regularization in CNN
 ### L1 Regularization
 - **Description:** Uses the absolute value of the magnitude of the coefficients multiplied by a constant alpha (the regularization parameter).
 - **Purpose:** Creates sparse models, eliminating some coefficients by setting them to zero.
