@@ -31,15 +31,15 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
 
         # Compute the error term for the output layer
         if i == L:
-            dz = A - Y
+            dZ = A - Y
         else:
             # Compute the error term for the hidden layers
-            dz = dA * (A * (1 - A))
+            dZ = dA * (A * (1 - A))
 
         # Compute the gradients for the weights and biases
-        db = dz.mean(axis=1, keepdims=True)
-        dW = np.matmul(dz, A_prev.T) / m
-        dA = np.matmul(W.T, dz)
+        db = dZ.mean(axis=1, keepdims=True)
+        dW = np.matmul(dZ, A_prev.T) / m
+        dA = np.matmul(W.T, dZ)
 
         # Update the weights and biases
         weights["W" + str(i)] -= alpha * dW
