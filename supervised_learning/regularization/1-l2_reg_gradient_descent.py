@@ -38,11 +38,11 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
 
         # Compute the gradients for the weights and biases
         db = dz.mean(axis=1, keepdims=True)
-        dw = np.matmul(dz, A_prev.T) / m
-        da = np.matmul(W.T, dz)
+        dW = np.matmul(dz, A_prev.T) / m
+        dA = np.matmul(W.T, dz)
 
         # Update the weights and biases
-        weights["W" + str(i)] -= alpha * dw
+        weights["W" + str(i)] -= alpha * dW
         weights["b" + str(i)] -= alpha * db
 
     return weights
