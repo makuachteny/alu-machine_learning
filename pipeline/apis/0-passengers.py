@@ -12,23 +12,24 @@ def availableShips(passengerCount):
     Returns:
         list of ships that can accommodate the given number of passengers.
     """
-    
+
     # URL to fetch starships data from Swapi API
     url = "https://swapi-api.alx-tools.com/api/starships/"
-    ships = [] # Initialize an empty list to store ships
-    
+    # Initialize an empty list to store ships
+    ships = []
+
     # Loop to handle pagination and fetch data from all pages
     while url:
         # Send a GET request to the Swapi API
         response = requests.get(url)
-        
+
         # Checks if the response status code is not 200
         if response.status_code != 200:
             break
-        
+
         # Parse the JSON response into a Python dictionary
         data = response.json()
-        
+
         # Iterate over the each ship in the current page of results
         for ship in data["results"]:
             try:
@@ -40,5 +41,5 @@ def availableShips(passengerCount):
             except ValueError:
                 continue
         url = data["next"]
-        
+
     return ships
