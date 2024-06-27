@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-""" Github api returns user location """
+
+
+""" Return list of ships"""
 
 import requests
 import sys
@@ -7,15 +9,17 @@ import time
 
 
 if __name__ == "__main__":
-    res = requests.get('https://api.github.com/users/' + sys.argv[1])
+    res = requests.get(sys.argv[1])
 
     if res.status_code == 403:
-        rate_limit = int(res.headers.get('X-RateLimit-Remaining'))
+        rate_limit = int(res.headers.get('X-Ratelimit-Reset'))
         current_time = int(time.time())
         diff = (rate_limit - current_time) // 60
         print("Reset in {} min".format(diff))
-        # get remaining rate limit
+        # get remaining rate
+
     elif res.status_code == 404:
-        print("User not found")
-    else:
-        print(res.json().get('location'))
+        print("Not found")
+    elif res.status_code == 200:
+        res = res.json()
+        print(res['location'])
