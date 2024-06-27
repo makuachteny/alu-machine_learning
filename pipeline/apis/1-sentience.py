@@ -31,7 +31,7 @@ def sentientPlanets():
             homeworld_url = species.get("homeworld")
             if homeworld_url and homeworld_url not in planets:
                 try:
-                    # Send a GET request to the homeworld URL to fetch planet data
+                    # GET request to the homeworld URL to fetch planet data
                     homeworld_response = requests.get(homeworld_url)
                     if homeworld_response.status_code == 200:
                         homeworld_data = homeworld_response.json()
