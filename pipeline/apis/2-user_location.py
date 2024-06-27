@@ -36,14 +36,20 @@ def get_user_location(api_url):
                 response.headers.get('X-Ratelimit-Reset', 0))
             current_time = int(time.time())
             diff = (rate_limit_reset - current_time) // 60
-            print(f"Reset in {diff} min")
+            print("Reset in {} min".format(diff))
         else:
-            print(f"Error: {response.status_code}")
+            print("Error: {}".format(response.status_code))
     except requests.RequestException as e:
-        print(f"Error: {e}")
+        print("Error: {}".format(e))
 
 
 if __name__ == "__main__":
+    """
+    Main execution block for fetching GitHub user location.
+    
+    Usage:
+        ./2-user_location.py <GitHub API URL>
+    """
     if len(sys.argv) != 2:
         print("Usage: ./2-user_location.py <GitHub API URL>")
     else:
