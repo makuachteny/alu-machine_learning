@@ -11,7 +11,7 @@ import time
 
 def get_user_location(api_url):
     """
-    Fetches and prints the location of a GitHub user based on the provided API URL.
+    Fetches location of a GitHub user.
 
     Args:
         api_url (str): The full API URL for the GitHub user.
@@ -46,7 +46,7 @@ def get_user_location(api_url):
 if __name__ == "__main__":
     """
     Main execution block for fetching GitHub user location.
-    
+
     Usage:
         ./2-user_location.py <GitHub API URL>
     """
