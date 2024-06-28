@@ -1,22 +1,25 @@
 #!/usr/bin/env python3
-"""Pipeline Api"""
+
+
+""" Return list of ships"""
+
 import requests
+import sys
+import time
 
 
-if __name__ == '__main__':
-    """pipeline api"""
-    url = "https://api.spacexdata.com/v4/launches"
-    r = requests.get(url)
-    rocket_dict = {"5e9d0d95eda69955f709d1eb": 0}
+if __name__ == "__main__":
+    res = requests.get(sys.argv[1])
 
-    for launch in r.json():
-        if launch["rocket"] in rocket_dict:
-            rocket_dict[launch["rocket"]] += 1
-        else:
-            rocket_dict[launch["rocket"]] = 1
-    for key, value in sorted(rocket_dict.items(),
-                             key=lambda kv: kv[1], reverse=True):
-        rurl = "https://api.spacexdata.com/v4/rockets/" + key
-        req = requests.get(rurl)
+    if res.status_code == 403:
+        rate_limit = int(res.headers.get('X-Ratelimit-Reset'))
+        current_time = int(time.time())
+        diff = (rate_limit - current_time) // 60
+        print("Reset in {} min".format(diff))
+        # get remaining rate
 
-        print(req.json()["name"] + ": " + str(value))
+    elif res.status_code == 404:
+        print("Not found")
+    elif res.status_code == 200:
+        res = res.json()
+        print(res['location'])
