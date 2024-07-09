@@ -1,6 +1,5 @@
 -- Creating the trigger
-
-DELIMITTER //
+DELIMITER //
 
 CREATE TRIGGER update_quantity_after_order
 AFTER INSERT ON orders
@@ -13,4 +12,4 @@ END;
 
 //
 
-DELIMITTER ; --Resets the delimiter to the default semicolon
+DELIMITER ; -- Resets the delimiter to the default semicolon
