@@ -1,6 +1,6 @@
 -- Creating the trigger
 
-DELIMITTER // --Allows the trigger creation with multiple statements
+DELIMITTER //
 
 CREATE TRIGGER update_quantity_after_order
 AFTER INSERT ON orders
@@ -10,4 +10,7 @@ BEGIN
     SET quantity = quantity - NEW.number
     WHERE id = NEW.product_id;
 END;
-// DELIMITTER ; --Resets the delimiter to the default semicolon
+
+//
+
+DELIMITTER ; --Resets the delimiter to the default semicolon
