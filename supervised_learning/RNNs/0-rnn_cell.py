@@ -43,3 +43,4 @@ class RNNCell:
         y = np.exp(y_lin) / np.sum(np.exp(y_lin), axis=1, keepdims=True)
 
         return h_next, y
+    
