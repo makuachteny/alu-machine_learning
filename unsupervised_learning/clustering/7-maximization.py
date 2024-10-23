@@ -4,6 +4,7 @@
 import numpy as np
 
 
+
 def maximization(X, g):
     """
     Function calculates the maximization step in the EM algorithm for a GMM
