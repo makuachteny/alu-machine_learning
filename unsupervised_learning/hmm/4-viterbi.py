@@ -37,28 +37,34 @@ def viterbi(Observation, Emission, Transition, Initial):
                 the probability of obtaining the path sequence
         or None, None on failure
     """
-    # check that Observation is the correct type and dimension
-    if type(Observation) is not np.ndarray or len(Observation.shape) < 1:
+    if type(Observation) is not np.ndarray or len(Observation.shape) != 1:
         return None, None
-    # save T from Observation's shape
     T = Observation.shape[0]
-    # check that Emission is the correct type and dimension
     if type(Emission) is not np.ndarray or len(Emission.shape) != 2:
         return None, None
-    # save N and M from Emission's shape
     N, M = Emission.shape
-    # check that Transition is the correct type and dimension
     if type(Transition) is not np.ndarray or len(Transition.shape) != 2:
         return None, None
-    # check that Transition's dimensions match N from Emission
-    N_check1, N_check2 = Transition.shape
-    if N_check1 != N or N_check2 != N:
+    N1, N2 = Transition.shape
+    if N1 != N or N2 != N:
         return None, None
-    # check that Initial is the correct type and dimension
     if type(Initial) is not np.ndarray or len(Initial.shape) != 2:
         return None, None
-    # check that Initial's dimensions match (N, 1)
-    N_check1, one = Initial.shape
-    if N_check1 != N or one != 1:
+    N3, N4 = Initial.shape
+    if N3 != N or N4 != 1:
         return None, None
-    return None, None
+    F = np.zeros((N, T))
+    F[:, 0] = Initial.T * Emission[:, Observation[0]]
+    back = np.zeros((N, T))
+    for i in range(1, T):
+        F[:, i] = np.max(
+            F[:, i - 1] * Transition.T * Emission[np.newaxis, :,
+                                                  Observation[i]].T, axis=1)
+        back[:, i] = np.argmax(
+            F[:, i - 1] * Transition.T, axis=1)
+    P = np.max(F[:, -1])
+    Path = [np.argmax(F[:, -1])]
+    for i in range(T - 1, 0, -1):
+        Path.insert(0, int(back[Path[0], i]))
+    return Path, P
+
