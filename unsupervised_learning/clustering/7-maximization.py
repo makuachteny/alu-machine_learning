@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""Module that calculates the maximization step in the EM algorithm for a GMM"""
+"""Module that calculates the maximization step in the EM 
+algorithm for a GMM"""
 
 import numpy as np
 
 
 def maximization(X, g):
     """
-    Function calculates the maximization step in the EM algorithm for a 
-    GMM
+    Function calculates the maximization step in the EM algorithm for a GMM
     """
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None, None, None
