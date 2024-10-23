@@ -67,4 +67,3 @@ def viterbi(Observation, Emission, Transition, Initial):
     for i in range(T - 1, 0, -1):
         Path.insert(0, int(back[Path[0], i]))
     return Path, P
-
