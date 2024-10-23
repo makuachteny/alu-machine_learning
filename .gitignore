@@ -1,0 +1,6 @@
+#Ignore the following files
+.github
+.vscode
+node_modules
+.venv
+__pycache__
