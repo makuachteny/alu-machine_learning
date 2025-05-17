@@ -56,16 +56,24 @@ class NST:
         Sets TensorFlow to execute eagerly
         Sets instance attributes
         """
+        
+        # Check the type of the style images
         if type(style_image) is not np.ndarray or \
            len(style_image.shape) != 3:
             raise TypeError(
                 "style_image must be a numpy.ndarray with shape (h, w, 3)")
+        
+        # Check the type of the content images
         if type(content_image) is not np.ndarray or \
            len(content_image.shape) != 3:
             raise TypeError(
                 "content_image must be a numpy.ndarray with shape (h, w, 3)")
+
+        # Initialize the parameters of the images
         style_h, style_w, style_c = style_image.shape
         content_h, content_w, content_c = content_image.shape
+        
+        # Ensure alpha and beta are non-negative numbers
         if style_h <= 0 or style_w <= 0 or style_c != 3:
             raise TypeError(
                 "style_image must be a numpy.ndarray with shape (h, w, 3)")
@@ -77,15 +85,14 @@ class NST:
         if (type(beta) is not float and type(beta) is not int) or beta < 0:
             raise TypeError("beta must be a non-negative number")
 
-        if not tf.executing_eagerly():
-            raise RuntimeError("TensorFlow is not executing eagerly")
+        # Set TensorFlow to execute eagerly
+        tf.enable_eager_execution()
 
-
+        # Set the instance attributes
         self.style_image = self.scale_image(style_image)
         self.content_image = self.scale_image(content_image)
         self.alpha = alpha
         self.beta = beta
-        self.load_model()
 
     @staticmethod
     def scale_image(image):
@@ -125,37 +132,3 @@ class NST:
         rescaled = resized / 255
         rescaled = tf.clip_by_value(rescaled, 0, 1)
         return (rescaled)
-
-    def load_model(self):
-        """
-        Creates the model used to calculate cost from VGG19 Keras base model
-
-        Model's input should match VGG19 input
-        Model's output should be a list containing outputs of VGG19 layers
-            listed in style_layers followed by content_layers
-
-        Saves the model in the instance attribute model
-        """
-        VGG19_model = tf.keras.applications.VGG19(include_top=False,
-                                                  weights='imagenet')
-        VGG19_model.save("VGG19_base_model")
-        custom_objects = {'MaxPooling2D': tf.keras.layers.AveragePooling2D}
-
-        vgg = tf.keras.models.load_model("VGG19_base_model",
-                                         custom_objects=custom_objects)
-
-        style_outputs = []
-        content_output = None
-
-        for layer in vgg.layers:
-            if layer.name in self.style_layers:
-                style_outputs.append(layer.output)
-            if layer.name in self.content_layer:
-                content_output = layer.output
-
-            layer.trainable = False
-
-        outputs = style_outputs + [content_output]
-
-        model = tf.keras.models.Model(vgg.input, outputs)
-        self.model = model
