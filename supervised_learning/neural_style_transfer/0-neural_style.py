@@ -56,13 +56,13 @@ class NST:
         Sets TensorFlow to execute eagerly
         Sets instance attributes
         """
-        
+
         # Check the type of the style images
         if type(style_image) is not np.ndarray or \
            len(style_image.shape) != 3:
             raise TypeError(
                 "style_image must be a numpy.ndarray with shape (h, w, 3)")
-        
+
         # Check the type of the content images
         if type(content_image) is not np.ndarray or \
            len(content_image.shape) != 3:
@@ -72,7 +72,7 @@ class NST:
         # Initialize the parameters of the images
         style_h, style_w, style_c = style_image.shape
         content_h, content_w, content_c = content_image.shape
-        
+
         # Ensure alpha and beta are non-negative numbers
         if style_h <= 0 or style_w <= 0 or style_c != 3:
             raise TypeError(
