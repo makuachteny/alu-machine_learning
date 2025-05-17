@@ -77,7 +77,7 @@ class NST:
         if (type(beta) is not float and type(beta) is not int) or beta < 0:
             raise TypeError("beta must be a non-negative number")
 
-        tf.enable_eager_execution()
+        # tf.enable_eager_execution()
 
         self.style_image = self.scale_image(style_image)
         self.content_image = self.scale_image(content_image)
@@ -118,8 +118,8 @@ class NST:
             w_new = 512
             h_new = int(h * (512 / w))
 
-        resized = tf.image.resize_bicubic(np.expand_dims(image, axis=0),
-                                          size=(h_new, w_new))
+        resized = tf.image.resize(np.expand_dims(image, axis=0),
+                                  size=(h_new, w_new), method='bicubic')
         rescaled = resized / 255
         rescaled = tf.clip_by_value(rescaled, 0, 1)
         return (rescaled)
@@ -136,10 +136,10 @@ class NST:
         """
         VGG19_model = tf.keras.applications.VGG19(include_top=False,
                                                   weights='imagenet')
-        VGG19_model.save("VGG19_base_model")
+        VGG19_model.save("VGG19_base_model.keras")
         custom_objects = {'MaxPooling2D': tf.keras.layers.AveragePooling2D}
 
-        vgg = tf.keras.models.load_model("VGG19_base_model",
+        vgg = tf.keras.models.load_model("VGG19_base_model.keras",
                                          custom_objects=custom_objects)
 
         style_outputs = []

@@ -9,8 +9,8 @@ NST = __import__('0-neural_style').NST
 
 
 if __name__ == '__main__':
-    style_image = mpimg.imread("starry_night.jpg")
-    content_image = mpimg.imread("golden_gate.jpg")
+    style_image = mpimg.imread("./data/starry_night.jpg")
+    content_image = mpimg.imread("./data/golden_gate.jpg")
 
     print(NST.style_layers)
     print(NST.content_layer)
