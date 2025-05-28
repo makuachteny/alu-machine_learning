@@ -24,11 +24,16 @@ def bag_of_words(sentences, vocab=None):
     # Tokenize sentences and remove punctuation
     tokenized_sentences = []
     for sentence in sentences:
-        sentence = re.sub(r'[^\w\s]', '', sentence)  # remove punctuation
-        sentence = re.sub(r'\s+', ' ', sentence).strip()  # remove extra spaces
-        words = sentence.lower().split()  # lowercase
-        tokenized_sentences.append(words)
-
+        # remove the punctuations except for apostrophes
+        sentence = re.sub(r"(?!\B'\b)[^\w\s']", '', sentence)
+        # strip sentence and convert it to lowercase
+        sentence = re.sub(r'\s+', ' ', sentence).strip().lower()
+        word = sentence.split()
+        
+        # remove possessive 
+        word = [w.rstrip("'s") for w in word]
+        tokenized_sentences.append(word)
+        
     # If vocab is None, use all unique words in sentences
     if vocab is None:
         vocab = sorted(
