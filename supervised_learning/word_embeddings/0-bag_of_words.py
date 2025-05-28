@@ -25,11 +25,7 @@ def bag_of_words(sentences, vocab=None):
     tokenized_sentences = []
     for sentence in sentences:
         sentence = re.sub(r'[^\w\s]', '', sentence)  # remove punctuation
-        sentence = re.sub(r'\s+', ' ', sentence).strip()  # remove extra spaces
         words = sentence.lower().split()  # lowercase
-        
-        # remove s from the end of words
-        words = [word[:-1] if word.endswith('s') else word for word in words]
         tokenized_sentences.append(words)
 
     # If vocab is None, use all unique words in sentences
