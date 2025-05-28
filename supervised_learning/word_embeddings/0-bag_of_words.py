@@ -24,9 +24,13 @@ def bag_of_words(sentences, vocab=None):
     # Tokenize sentences and remove punctuation
     tokenized_sentences = []
     for sentence in sentences:
-        sentence = re.sub(r'[^\w\s]', '', sentence)  # remove punctuation
-        words = sentence.lower().split()  # lowercase
-        tokenized_sentences.append(words)
+        # remove possessive 's and punctuation
+        sentence = re.sub(r"'s\b", '', sentence)
+        sentence = re.sub(r'[^\w\s]', '', sentence)
+        # split sentence into words
+        word = sentence.lower().split()
+        
+        tokenized_sentences.append(word)
 
     # If vocab is None, use all unique words in sentences
     if vocab is None:
@@ -34,7 +38,8 @@ def bag_of_words(sentences, vocab=None):
             set(word for sentence in tokenized_sentences for word in sentence))
     else:
         # Ensure vocab is a list of unique words
-        vocab = sorted(set(vocab))
+        seen = set()
+        vocab = [word for word in vocab if not (word in seen or seen.add(word))]
 
     # Create embeddings matrix
     embeddings = np.zeros((len(sentences), len(vocab)), dtype=int)
@@ -43,4 +48,4 @@ def bag_of_words(sentences, vocab=None):
             if word in vocab:
                 embeddings[i, vocab.index(word)] += 1
 
-    return embeddings, vocab  # Return vocab as features
+    return embeddings, vocab
