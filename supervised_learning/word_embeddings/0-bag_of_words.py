@@ -11,7 +11,7 @@ def bag_of_words(sentences, vocab=None):
 
     Parameters:
     sentences (list): List of sentences to analyze.
-    vocab (list): List of vocabulary words to use for the analysis. 
+    vocab (list): List of vocabulary words to use for the analysis.
     If None, all words within sentences are used.
 
     Returns:
@@ -34,10 +34,10 @@ def bag_of_words(sentences, vocab=None):
             set(word for sentence in tokenized_sentences for word in sentence))
 
     # Create embeddings matrix
-    embeddings = np.zeros((len(sentences), len(vocab)))
+    embeddings = np.zeros((len(sentences), len(vocab)), dtype=int)
     for i, sentence in enumerate(tokenized_sentences):
         for word in sentence:
             if word in vocab:
                 embeddings[i, vocab.index(word)] += 1
 
-    return embeddings, vocab
+    return embeddings, vocab  # Return vocab as features
