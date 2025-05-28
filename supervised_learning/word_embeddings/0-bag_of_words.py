@@ -5,48 +5,33 @@ import numpy as np
 import re
 
 
-def bag_of_words(sentences, vocab=None):
-    """
-    Creates a bag of words embedding matrix.
-
-    Parameters:
-    sentences (list): List of sentences to analyze.
-    vocab (list): List of vocabulary words to use for the analysis.
-    If None, all words within sentences are used.
-
-    Returns:
-    tuple: embeddings (numpy.ndarray), features (list)
-        embeddings shape - (s, f)
-            s - number of sentences in sentences
-            f - number of features analyzed
-        features - list of features used for embeddings
-    """
-    # Tokenize sentences and remove punctuation
+def bag_of_words(sentences):
     tokenized_sentences = []
+
     for sentence in sentences:
-        # remove the punctuations except for apostrophes
+        # Remove punctuation except apostrophes (for handling possessives)
         sentence = re.sub(r"(?!\B'\b)[^\w\s']", '', sentence)
-        # strip sentence and convert it to lowercase
         sentence = re.sub(r'\s+', ' ', sentence).strip().lower()
-        word = sentence.split()
-        
-        # remove possessive 
-        word = [w.rstrip("'s") for w in word]
-        tokenized_sentences.append(word)
-        
-    # If vocab is None, use all unique words in sentences
-    if vocab is None:
-        vocab = sorted(
-            set(word for sentence in tokenized_sentences for word in sentence))
-    else:
-        # Ensure vocab is a list of unique words
-        vocab = sorted(set(vocab))
 
-    # Create embeddings matrix
-    embeddings = np.zeros((len(sentences), len(vocab)), dtype=int)
-    for i, sentence in enumerate(tokenized_sentences):
+        words = sentence.split()
+
+        # Remove possessive 's (e.g., children's → children)
+        words = [word[:-2] if word.endswith("'s") else word for word in words]
+
+        tokenized_sentences.append(words)
+
+    # Build sorted vocabulary
+    vocab = sorted(set(word for sent in tokenized_sentences for word in sent))
+
+    # Map words to indices
+    word_to_index = {word: i for i, word in enumerate(vocab)}
+
+    # Create bag-of-words matrix
+    matrix = []
+    for sentence in tokenized_sentences:
+        row = [0] * len(vocab)
         for word in sentence:
-            if word in vocab:
-                embeddings[i, vocab.index(word)] += 1
+            row[word_to_index[word]] += 1
+        matrix.append(row)
 
-    return embeddings, vocab  # Return vocab as features
+    return matrix, vocab
