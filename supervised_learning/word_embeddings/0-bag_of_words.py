@@ -29,7 +29,7 @@ def bag_of_words(sentences, vocab=None):
         sentence = re.sub(r'[^\w\s]', '', sentence)
         # split sentence into words
         word = sentence.lower().split()
-        
+
         tokenized_sentences.append(word)
 
     # If vocab is None, use all unique words in sentences
@@ -39,7 +39,8 @@ def bag_of_words(sentences, vocab=None):
     else:
         # Ensure vocab is a list of unique words
         seen = set()
-        vocab = [word for word in vocab if not (word in seen or seen.add(word))]
+        vocab = [word for word in vocab if not (
+            word in seen or seen.add(word))]
 
     # Create embeddings matrix
     embeddings = np.zeros((len(sentences), len(vocab)), dtype=int)
