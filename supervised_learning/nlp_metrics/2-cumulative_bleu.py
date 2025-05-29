@@ -10,7 +10,7 @@ def cumulative_bleu(references, sentence, n):
     Calculates the cumulative n-gram BLEU score for a sentence.
 
     Args:
-        references (list): list of reference translations 
+        references (list): list of reference translations
             (each list of words)
         sentence (list): candidate sentence (list of words)
         n (int): size of the largest n-gram to use for evaluation
