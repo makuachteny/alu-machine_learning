@@ -1,53 +1,57 @@
+from math import exp
+
 #!/usr/bin/env python3
 """
-    this module implements the uni-bleu metric 
+    This module implements the uni-bleu metric 
 """
 
 
 def uni_bleu(references, sentence):
-    """_summary_
-    calculates the unigram BLEU score for a sentence against a list of 
-    references 
-    Args:
-        references (list): list of reference sentences
-        sentence (str): sentence to evaluate
-    Returns:
-        float: unigram BLEU score
     """
+    Calculates the unigram BLEU score for a sentence against list of references.
     
+    Args:
+        references (list of list of str): List reference sentences (tokenized).
+        sentence (list of str): Sentence to evaluate (tokenized).
+    
+    Returns:
+        float: Unigram BLEU score.
+    """
+    # Count words in the sentence
+    count_unigram = {}
+    for word in sentence:
+        count_unigram[word] = count_unigram.get(word, 0) + 1
 
-    # count words in the sentence
-    word_counts = {}
-    for word in sentence.split():
-        word_counts[word] = word_counts.get(word, 0) + 1
-        
-    # Clip words based on references
-    clipped_counts = {}
-    for ref in references:
-        ref_counts = {}
-        for word in ref.split():
-            ref_counts[word] = ref_counts.get(word, 0) + 1
-            
-        for word, count in word_counts.items():
-            if word in ref_counts:
-                clipped_counts[word] = min(count, ref_counts[word])
-            else:
-                clipped_counts[word] = 0
+    # Clip count words based on the max references
+    count_clip = {}
+    for word in count_unigram:
+        max_count = 0
+        for ref in references:
+            ref_count = ref.count(word)
+            max_count = max(max_count, ref_count)
+        count_clip[word] = min(count_unigram[word], max_count)
+
     # Calculate precision
-    total_clipped = sum(clipped_counts.values())
-    total_words = sum(word_counts.values())
-    if total_words == 0:
-        return 0.0
-    precision = total_clipped / total_words
-    
+    sum_count_clip = sum(count_clip.values())
+    sum_count_unigram = sum(count_unigram.values())
+    if sum_count_unigram == 0:
+        return 0.0 
+    precision = sum_count_clip / sum_count_unigram
+
     # Calculate brevity penalty
-    ref_lengths = [len(ref.split()) for ref in references]
-    sentence_length = len(sentence.split())
-    closest_ref_length = min(ref_lengths, key=lambda x: abs(x - sentence_length))
+    sentence_length = len(sentence) # length of the candidate sentence
+    ref_lengths = [len(ref) for ref in references] # length of ref
+    
+    # Find the closest reference length
+    closest_ref_length = min(ref_lengths, key=lambda r: 
+        (abs(r - sentence_length), r))
+
     if sentence_length > closest_ref_length:
         brevity_penalty = 1.0
     else:
-        brevity_penalty = 0.0
+        brevity_penalty = exp(1 - closest_ref_length / sentence_length)
+
     # Calculate BLEU score
-    bleu_score = precision * brevity_penalty
+    bleu_score = brevity_penalty * precision
+
     return bleu_score
