@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-    This module implements the uni-bleu metric 
+    This module implements the uni-bleu metric
 """
 from math import exp
 
@@ -34,15 +34,17 @@ def uni_bleu(references, sentence):
     sum_count_clip = sum(count_clip.values())
     sum_count_unigram = sum(count_unigram.values())
     if sum_count_unigram == 0:
-        return 0.0 
+        return 0.0
     precision = sum_count_clip / sum_count_unigram
 
     # Calculate brevity penalty
-    sentence_length = len(sentence) # length of the candidate sentence
-    ref_lengths = [len(ref) for ref in references] # length of ref
-    
+    sentence_length = len(sentence)
+    ref_lengths = [len(ref) for ref in references]
+
     # Find the closest reference length
-    closest_ref_length = min(ref_lengths, key=lambda r: 
+    closest_ref_length = min(
+        ref_lengths,
+        key=lambda r:
         (abs(r - sentence_length), r))
 
     if sentence_length > closest_ref_length:
