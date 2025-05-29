@@ -10,7 +10,7 @@ def ngram_bleu(references, sentence, n):
     Calculates the n-gram BLEU score for a sentence.
 
     Args:
-        references (list): List of reference translations (each a list of words).
+        references (list): List of reference translations (each a list of words)
         sentence (list): List of words in the model-proposed sentence.
         n (int): The size of the n-gram to use for evaluation.
 
