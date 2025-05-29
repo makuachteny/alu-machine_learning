@@ -1,21 +1,20 @@
-from math import exp
-
 #!/usr/bin/env python3
 """
     This module implements the uni-bleu metric 
 """
+from math import exp
 
 
 def uni_bleu(references, sentence):
     """
-    Calculates the unigram BLEU score for a sentence against list of references.
-    
+    Calculates the unigram BLEU score for a sentence against list of references
+
     Args:
-        references (list of list of str): List reference sentences (tokenized).
+        references (list of list of str): List reference sentences (tokenized)
         sentence (list of str): Sentence to evaluate (tokenized).
-    
+
     Returns:
-        float: Unigram BLEU score.
+        float: Unigram BLEU score
     """
     # Count words in the sentence
     count_unigram = {}
