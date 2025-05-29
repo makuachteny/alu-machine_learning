@@ -5,7 +5,6 @@
 from math import exp
 
 
-
 def ngram_bleu(references, sentence, n):
     """
     Calculates the n-gram BLEU score for a sentence.
