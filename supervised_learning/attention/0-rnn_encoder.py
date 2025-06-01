@@ -4,8 +4,6 @@
 This module contains a class RNNEncoder
 that encode machine translation"""
 import tensorflow as tf
-import numpy as np
-
 
 
 class RNNEncoder(tf.keras.layers.Layer):
