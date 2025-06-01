@@ -4,6 +4,8 @@
 This module contains a class RNNEncoder
 that encode machine translation"""
 import tensorflow as tf
+import numpy as np
+np.set_printoptions(precision=5, suppress=True)
 
 
 class RNNEncoder(tf.keras.layers.Layer):
@@ -12,7 +14,7 @@ class RNNEncoder(tf.keras.layers.Layer):
     def __init__(self, vocab, embedding, units, batch):
         super(RNNEncoder, self).__init__()
         """class contructor
-        vocab - int size of input vocabulary
+        vocab (int) - size of the vocabulary
         embedding - dim of embedding vector
         units -  no. of hidden units in RNN cell
         batch - batch size int"""
